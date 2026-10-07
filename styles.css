@@ -1,0 +1,757 @@
+/* ============================================================
+   styles.css - Tema oscuro (slate-900 a slate-950)
+   Diseño responsive para pantallas de 900px+
+   ============================================================ */
+
+/* --- Variables de color --- */
+:root {
+  --slate-50: #f8fafc;
+  --slate-100: #f1f5f9;
+  --slate-200: #e2e8f0;
+  --slate-300: #cbd5e1;
+  --slate-400: #94a3b8;
+  --slate-500: #64748b;
+  --slate-600: #475569;
+  --slate-700: #334155;
+  --slate-800: #1e293b;
+  --slate-900: #0f172a;
+  --slate-950: #020617;
+
+  --blue-400: #60a5fa;
+  --blue-500: #3b82f6;
+  --blue-600: #2563eb;
+  --blue-700: #1d4ed8;
+
+  --green-400: #4ade80;
+  --green-500: #22c55e;
+  --green-600: #16a34a;
+
+  --red-400: #f87171;
+  --red-500: #ef4444;
+  --red-600: #dc2626;
+
+  --amber-400: #fbbf24;
+  --amber-500: #f59e0b;
+
+  --radius: 8px;
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -2px rgba(0, 0, 0, 0.2);
+
+  /* Ancho del panel lateral */
+  --panel-width: 310px;
+  --panel-collapsed-width: 36px;
+}
+
+/* --- Reset y base --- */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 14px;
+}
+
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background-color: var(--slate-950);
+  color: var(--slate-200);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* --- Scrollbar personalizado --- */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--slate-900);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--slate-600);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--slate-500);
+}
+
+/* ============================================================
+   Cabecera
+   ============================================================ */
+
+.app-header {
+  background-color: var(--slate-900);
+  border-bottom: 1px solid var(--slate-700);
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+
+.app-header h1 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--slate-50);
+}
+
+.header-date {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.header-date label {
+  color: var(--slate-300);
+  font-weight: 500;
+}
+
+/* ============================================================
+   Layout principal: dos paneles
+   ============================================================ */
+
+.app-main {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* ============================================================
+   Panel izquierdo - Sidebar colapsable
+   ============================================================ */
+
+.left-panel {
+  width: var(--panel-width);
+  min-width: var(--panel-collapsed-width);
+  background-color: var(--slate-900);
+  border-right: 1px solid var(--slate-700);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  transition: width 0.3s ease;
+  position: relative;
+}
+
+/* Estado colapsado del panel */
+.left-panel.collapsed {
+  width: var(--panel-collapsed-width);
+}
+
+/* Botón de toggle del panel completo */
+.btn-toggle-panel {
+  background: var(--slate-800);
+  border: none;
+  border-bottom: 1px solid var(--slate-700);
+  color: var(--slate-300);
+  cursor: pointer;
+  padding: 8px;
+  font-size: 0.9rem;
+  text-align: center;
+  transition: background-color 0.2s, color 0.2s;
+  flex-shrink: 0;
+  width: 100%;
+}
+
+.btn-toggle-panel:hover {
+  background-color: var(--slate-700);
+  color: var(--slate-100);
+}
+
+#toggle-panel-icon {
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+.left-panel.collapsed #toggle-panel-icon {
+  transform: rotate(180deg);
+}
+
+/* Contenido del panel (se oculta al colapsar) */
+.panel-content {
+  overflow-y: auto;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  flex: 1;
+  opacity: 1;
+  transition: opacity 0.2s ease;
+}
+
+.left-panel.collapsed .panel-content {
+  opacity: 0;
+  pointer-events: none;
+  padding: 0;
+  overflow: hidden;
+}
+
+/* --- Panel derecho --- */
+.right-panel {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  transition: flex 0.3s ease;
+}
+
+/* ============================================================
+   Barra superior de tareas (título + botón guardar)
+   ============================================================ */
+
+.tareas-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.tareas-header h2 {
+  font-size: 1.2rem;
+  color: var(--slate-100);
+}
+
+/* ============================================================
+   Secciones del panel izquierdo
+   ============================================================ */
+
+.panel-section {
+  background-color: var(--slate-800);
+  border: 1px solid var(--slate-700);
+  border-radius: var(--radius);
+  padding: 14px;
+}
+
+.panel-section h2 {
+  font-size: 1rem;
+  color: var(--slate-100);
+  margin-bottom: 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--slate-700);
+}
+
+/* --- Grupo de inputs --- */
+.input-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.input-group input,
+.input-group select {
+  flex: 1;
+  min-width: 0;
+}
+
+/* --- Lista de elementos --- */
+.items-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-height: 180px;
+  overflow-y: auto;
+}
+
+.item-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--slate-700);
+  padding: 6px 10px;
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+
+.item-row .item-name {
+  color: var(--slate-200);
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.item-row .item-category {
+  color: var(--slate-400);
+  font-size: 0.8rem;
+  margin-left: 6px;
+}
+
+.item-row .btn-delete {
+  background: none;
+  border: none;
+  color: var(--red-400);
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 2px 4px;
+  border-radius: 3px;
+  transition: background-color 0.15s;
+  flex-shrink: 0;
+}
+
+.item-row .btn-delete:hover {
+  background-color: rgba(239, 68, 68, 0.2);
+}
+
+/* ============================================================
+   Formularios: inputs, selects, textareas
+   ============================================================ */
+
+input[type='text'],
+input[type='date'],
+select,
+textarea {
+  background-color: var(--slate-800);
+  border: 1px solid var(--slate-600);
+  color: var(--slate-100);
+  padding: 8px 10px;
+  border-radius: var(--radius);
+  font-size: 0.9rem;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input[type='text']:focus,
+input[type='date']:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--blue-500);
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.25);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--slate-500);
+}
+
+select {
+  cursor: pointer;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 60px;
+}
+
+/* ============================================================
+   Botones
+   ============================================================ */
+
+.btn {
+  padding: 8px 14px;
+  border: none;
+  border-radius: var(--radius);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+  white-space: nowrap;
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+.btn-primary {
+  background-color: var(--blue-600);
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: var(--blue-700);
+}
+
+.btn-secondary {
+  background-color: var(--slate-700);
+  color: var(--slate-200);
+  border: 1px solid var(--slate-600);
+}
+
+.btn-secondary:hover {
+  background-color: var(--slate-600);
+}
+
+.btn-danger {
+  background-color: var(--red-600);
+  color: white;
+}
+
+.btn-danger:hover {
+  background-color: var(--red-500);
+}
+
+.btn-small {
+  padding: 4px 8px;
+  font-size: 0.8rem;
+}
+
+/* ============================================================
+   Grid de tarjetas de tareas
+   ============================================================ */
+
+.tareas-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 16px;
+}
+
+/* --- Tarjeta de tarea individual --- */
+.tarea-card {
+  background-color: var(--slate-900);
+  border: 1px solid var(--slate-700);
+  border-radius: var(--radius);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: border-color 0.2s;
+}
+
+.tarea-card:hover {
+  border-color: var(--slate-500);
+}
+
+.tarea-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--slate-700);
+}
+
+.tarea-card-header h3 {
+  font-size: 1rem;
+  color: var(--blue-400);
+  font-weight: 700;
+}
+
+/* --- Campos dentro de la tarjeta --- */
+.tarea-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.tarea-field label {
+  font-size: 0.8rem;
+  color: var(--slate-400);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.tarea-field input,
+.tarea-field select,
+.tarea-field textarea {
+  width: 100%;
+}
+
+/* --- Contenedor de vehículos --- */
+.vehiculos-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.vehiculos-group label {
+  font-size: 0.8rem;
+  color: var(--slate-400);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.vehiculos-selects {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.vehiculos-selects select {
+  width: 100%;
+}
+
+/* --- Contenedor de trabajadores --- */
+.trabajadores-section {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.trabajadores-section > label {
+  font-size: 0.8rem;
+  color: var(--slate-400);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.trabajadores-add {
+  display: flex;
+  gap: 6px;
+}
+
+.trabajadores-add select {
+  flex: 1;
+}
+
+.trabajadores-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  min-height: 28px;
+}
+
+/* --- Chips de trabajadores asignados --- */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background-color: var(--blue-600);
+  color: white;
+  padding: 3px 8px;
+  border-radius: 14px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.chip .chip-remove {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+  font-size: 0.9rem;
+  padding: 0 2px;
+  line-height: 1;
+}
+
+.chip .chip-remove:hover {
+  color: white;
+}
+
+/* ============================================================
+   Notificación flotante
+   ============================================================ */
+
+.notificacion {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background-color: var(--slate-800);
+  border: 1px solid var(--slate-600);
+  color: var(--slate-100);
+  padding: 14px 22px;
+  border-radius: var(--radius);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  font-size: 0.95rem;
+  transition: opacity 0.3s, transform 0.3s;
+  max-width: 400px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.notificacion.oculto {
+  opacity: 0;
+  transform: translateY(20px);
+  pointer-events: none;
+}
+
+.notificacion.exito {
+  border-color: var(--green-500);
+  border-left: 4px solid var(--green-500);
+}
+
+.notificacion.error {
+  border-color: var(--red-500);
+  border-left: 4px solid var(--red-500);
+}
+
+.notificacion.info {
+  border-color: var(--blue-500);
+  border-left: 4px solid var(--blue-500);
+}
+
+/* --- Botón deshacer en notificación --- */
+.btn-deshacer {
+  background-color: var(--amber-500);
+  color: var(--slate-950);
+  padding: 5px 12px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.btn-deshacer:hover {
+  background-color: var(--amber-400);
+}
+
+.btn-deshacer.oculto {
+  display: none;
+}
+
+/* ============================================================
+   Secciones de ausencias
+   ============================================================ */
+
+.ausencias-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-top: 8px;
+  padding-top: 16px;
+  border-top: 1px solid var(--slate-700);
+}
+
+.ausencia-section {
+  background-color: var(--slate-900);
+  border: 1px solid var(--slate-700);
+  border-radius: var(--radius);
+  padding: 12px;
+}
+
+.ausencia-section h3 {
+  font-size: 0.95rem;
+  color: var(--slate-100);
+  margin-bottom: 8px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--slate-700);
+}
+
+/* Colores distintivos por tipo */
+.ausencia-section[data-tipo="baja"] {
+  border-left: 3px solid var(--red-500);
+}
+
+.ausencia-section[data-tipo="vacaciones"] {
+  border-left: 3px solid var(--amber-500);
+}
+
+.ausencia-section[data-tipo="descanso"] {
+  border-left: 3px solid var(--blue-500);
+}
+
+.ausencia-add {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.ausencia-add select {
+  flex: 1;
+}
+
+.ausencia-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  min-height: 24px;
+}
+
+/* Chips de ausencia con colores por tipo */
+.chip-baja {
+  background-color: var(--red-600) !important;
+}
+
+.chip-vacaciones {
+  background-color: var(--amber-500) !important;
+  color: var(--slate-950) !important;
+}
+
+.chip-descanso {
+  background-color: var(--blue-600) !important;
+}
+
+/* ============================================================
+   Responsive: pantallas grandes
+   ============================================================ */
+
+@media (min-width: 1200px) {
+  .tareas-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1600px) {
+  .tareas-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* ============================================================
+   Responsive: pantallas medianas
+   ============================================================ */
+
+@media (max-width: 1100px) {
+  .tareas-grid {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
+}
+
+/* ============================================================
+   Responsive: pantallas pequeñas (900px mínimo)
+   ============================================================ */
+
+@media (max-width: 950px) {
+  .app-main {
+    flex-direction: column;
+  }
+
+  .left-panel {
+    width: 100% !important;
+    min-width: unset;
+    max-height: 300px;
+    border-right: none;
+    border-bottom: 1px solid var(--slate-700);
+  }
+
+  .left-panel.collapsed {
+    width: 100% !important;
+    max-height: 36px;
+  }
+
+  .panel-section {
+    flex: 1;
+    min-width: 250px;
+  }
+
+  .right-panel {
+    overflow-y: auto;
+  }
+
+  .tareas-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
+
+  .ausencias-container {
+    grid-template-columns: 1fr;
+  }
+
+  .tareas-header {
+    flex-wrap: wrap;
+  }
+}
+
+/* ============================================================
+   Estado vacío
+   ============================================================ */
+
+.empty-state {
+  color: var(--slate-500);
+  font-size: 0.85rem;
+  text-align: center;
+  padding: 12px;
+  font-style: italic;
+}

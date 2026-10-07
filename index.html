@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline';" />
+  <title>Planificador de Tareas</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- ============================================ -->
+  <!-- Cabecera principal -->
+  <!-- ============================================ -->
+  <header class="app-header">
+    <h1>Planificador de Tareas</h1>
+    <div class="header-date">
+      <label for="fecha-input">Fecha:</label>
+      <input type="date" id="fecha-input" />
+      <button id="btn-cargar-dia" class="btn btn-secondary" title="Cargar tareas del día">Cargar día</button>
+    </div>
+  </header>
+
+  <!-- ============================================ -->
+  <!-- Contenedor principal con dos paneles -->
+  <!-- ============================================ -->
+  <main class="app-main">
+
+    <!-- ============================================ -->
+    <!-- PANEL IZQUIERDO: Gestión de datos (colapsable) -->
+    <!-- ============================================ -->
+    <aside class="left-panel" id="left-panel">
+
+      <!-- Botón para colapsar/expandir todo el panel -->
+      <button class="btn-toggle-panel" id="btn-toggle-panel" title="Ocultar panel">
+        <span id="toggle-panel-icon">◀</span>
+      </button>
+
+      <div class="panel-content" id="panel-content">
+
+        <!-- Sección: Categorías -->
+        <section class="panel-section">
+          <h2>Categorías</h2>
+          <div class="input-group">
+            <input type="text" id="categoria-nombre" placeholder="Nueva categoría..." />
+            <button id="btn-add-categoria" class="btn btn-primary">+ Añadir</button>
+          </div>
+          <div id="categorias-list" class="items-list"></div>
+        </section>
+
+        <!-- Sección: Empleados -->
+        <section class="panel-section">
+          <h2>Empleados</h2>
+          <div class="input-group">
+            <input type="text" id="empleado-nombre" placeholder="Nombre del empleado..." />
+            <select id="empleado-categoria">
+              <option value="">-- Categoría --</option>
+            </select>
+            <button id="btn-add-empleado" class="btn btn-primary">+ Añadir</button>
+          </div>
+          <div id="empleados-list" class="items-list"></div>
+        </section>
+
+        <!-- Sección: Vehículos -->
+        <section class="panel-section">
+          <h2>Vehículos</h2>
+          <div class="input-group">
+            <input type="text" id="vehiculo-nombre" placeholder="Nombre del vehículo..." />
+            <button id="btn-add-vehiculo" class="btn btn-primary">+ Añadir</button>
+          </div>
+          <div id="vehiculos-list" class="items-list"></div>
+        </section>
+
+      </div>
+    </aside>
+
+    <!-- ============================================ -->
+    <!-- PANEL DERECHO: Tareas + ausencias -->
+    <!-- ============================================ -->
+    <section class="right-panel" id="right-panel">
+
+      <!-- Barra superior: título + botón guardar -->
+      <div class="tareas-header">
+        <h2>Tareas del día</h2>
+        <button id="btn-guardar" class="btn btn-primary">
+          Guardar día y exportar Excel
+        </button>
+      </div>
+
+      <!-- Grid de 6 tarjetas de tareas -->
+      <div id="tareas-grid" class="tareas-grid">
+        <!-- Se generan dinámicamente desde app.js -->
+      </div>
+
+      <!-- ============================================ -->
+      <!-- Secciones de ausencias: baja, vacaciones, descanso -->
+      <!-- ============================================ -->
+      <div class="ausencias-container">
+        <!-- Baja -->
+        <div class="ausencia-section" data-tipo="baja">
+          <h3>Baja</h3>
+          <div class="ausencia-add">
+            <select class="ausencia-select" id="select-baja">
+              <option value="">-- Seleccionar trabajador --</option>
+            </select>
+            <button class="btn btn-primary btn-small" onclick="agregarAusencia('baja')">+ Añadir</button>
+          </div>
+          <div class="ausencia-chips" id="chips-baja"></div>
+        </div>
+
+        <!-- Vacaciones -->
+        <div class="ausencia-section" data-tipo="vacaciones">
+          <h3>Vacaciones</h3>
+          <div class="ausencia-add">
+            <select class="ausencia-select" id="select-vacaciones">
+              <option value="">-- Seleccionar trabajador --</option>
+            </select>
+            <button class="btn btn-primary btn-small" onclick="agregarAusencia('vacaciones')">+ Añadir</button>
+          </div>
+          <div class="ausencia-chips" id="chips-vacaciones"></div>
+        </div>
+
+        <!-- Descanso -->
+        <div class="ausencia-section" data-tipo="descanso">
+          <h3>Descanso</h3>
+          <div class="ausencia-add">
+            <select class="ausencia-select" id="select-descanso">
+              <option value="">-- Seleccionar trabajador --</option>
+            </select>
+            <button class="btn btn-primary btn-small" onclick="agregarAusencia('descanso')">+ Añadir</button>
+          </div>
+          <div class="ausencia-chips" id="chips-descanso"></div>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- ============================================ -->
+  <!-- Notificación flotante -->
+  <!-- ============================================ -->
+  <div id="notificacion" class="notificacion oculto">
+    <span id="notificacion-texto"></span>
+    <button id="btn-deshacer" class="btn btn-deshacer oculto">Deshacer</button>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

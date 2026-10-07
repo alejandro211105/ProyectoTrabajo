@@ -1,0 +1,59 @@
+{
+  "name": "planificador-tareas",
+  "version": "1.0.0",
+  "description": "Planificador diario de tareas con gestión de trabajadores y vehículos",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron . --no-sandbox",
+    "build": "electron-builder",
+    "build:linux": "electron-builder --linux deb AppImage"
+  },
+  "author": "Alejandro",
+  "license": "MIT",
+  "dependencies": {
+    "sql.js": "^1.10.3",
+    "xlsx": "^0.18.5"
+  },
+  "devDependencies": {
+    "electron": "^28.1.0",
+    "electron-builder": "^24.9.1"
+  },
+  "build": {
+    "appId": "com.planificador.tareas",
+    "productName": "Planificador de Tareas",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "database.js",
+      "index.html",
+      "styles.css",
+      "app.js",
+      "node_modules/**/*"
+    ],
+    "linux": {
+      "target": [
+        "deb",
+        "AppImage"
+      ],
+      "category": "Office",
+      "icon": "icon.png",
+      "maintainer": "Alejandro"
+    },
+    "deb": {
+      "depends": [
+        "libgtk-3-0",
+        "libnotify4",
+        "libnss3",
+        "libxss1",
+        "libxtst6",
+        "xdg-utils",
+        "libatspi2.0-0",
+        "libuuid1",
+        "libsecret-1-0"
+      ]
+    }
+  }
+}
