@@ -40,6 +40,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   await cargarTareasDia();
   await cargarAusencias();
 
+  // Restaurar estado del panel (colapsado o expandido)
+  restaurarEstadoPanel();
+
   // Registrar eventos
   registrarEventos();
 });
@@ -82,6 +85,12 @@ function registrarEventos() {
 
   // --- Guardar y exportar ---
   document.getElementById('btn-guardar').addEventListener('click', guardarYExportar);
+
+  // --- Botón desplegar/colapsar panel ---
+  document.getElementById('btn-toggle-panel').addEventListener('click', () => {
+    togglePanelIzquierdo();
+    guardarEstadoPanel();
+  });
 }
 
 // ============================================================
@@ -100,6 +109,32 @@ function togglePanelIzquierdo() {
   if (panel.classList.contains('collapsed')) {
     btn.title = 'Mostrar panel';
   } else {
+    btn.title = 'Ocultar panel';
+  }
+}
+
+/**
+ * Guarda el estado del panel (colapsado/expandido) en localStorage.
+ */
+function guardarEstadoPanel() {
+  const panel = document.getElementById('left-panel');
+  const estado = panel.classList.contains('collapsed') ? 'collapsed' : 'expanded';
+  localStorage.setItem('panelState', estado);
+}
+
+/**
+ * Restaura el estado del panel desde localStorage.
+ */
+function restaurarEstadoPanel() {
+  const savedState = localStorage.getItem('panelState');
+  const panel = document.getElementById('left-panel');
+  const btn = document.getElementById('btn-toggle-panel');
+
+  if (savedState === 'collapsed') {
+    panel.classList.add('collapsed');
+    btn.title = 'Mostrar panel';
+  } else {
+    panel.classList.remove('collapsed');
     btn.title = 'Ocultar panel';
   }
 }
