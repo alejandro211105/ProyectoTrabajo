@@ -1,9 +1,7 @@
 /* ============================================================
-   styles.css - Tema oscuro (slate-900 a slate-950)
-   Diseño responsive para pantallas de 900px+
+   styles.css - Tema oscuro premium para Planificador de Tareas
    ============================================================ */
 
-/* --- Variables de color --- */
 :root {
   --slate-50: #f8fafc;
   --slate-100: #f1f5f9;
@@ -33,15 +31,13 @@
   --amber-400: #fbbf24;
   --amber-500: #f59e0b;
 
-  --radius: 8px;
-  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -2px rgba(0, 0, 0, 0.2);
-
-  /* Ancho del panel lateral */
+  --radius: 10px;
   --panel-width: 310px;
-  --panel-collapsed-width: 36px;
+  --panel-collapsed-width: 38px;
+  --shadow-soft: 0 8px 22px rgba(15, 23, 42, 0.24);
+  --shadow-card: 0 10px 28px rgba(2, 6, 23, 0.28);
 }
 
-/* --- Reset y base --- */
 *,
 *::before,
 *::after {
@@ -56,50 +52,50 @@ html {
 
 body {
   font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-  background-color: var(--slate-950);
+  background:
+    radial-gradient(circle at top left, rgba(59, 130, 246, 0.18), transparent 26%),
+    linear-gradient(180deg, #020817 0%, #0f172a 100%);
   color: var(--slate-200);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
-/* --- Scrollbar personalizado --- */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--slate-900);
+  background: rgba(15, 23, 42, 0.9);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--slate-600);
-  border-radius: 4px;
+  background: rgba(100, 116, 139, 0.8);
+  border-radius: 999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--slate-500);
+  background: rgba(148, 163, 184, 0.9);
 }
 
-/* ============================================================
-   Cabecera
-   ============================================================ */
-
 .app-header {
-  background-color: var(--slate-900);
-  border-bottom: 1px solid var(--slate-700);
-  padding: 12px 24px;
+  background: rgba(15, 23, 42, 0.88);
+  border-bottom: 1px solid rgba(148, 163, 184, 0.16);
+  backdrop-filter: blur(12px);
+  padding: 14px 22px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   flex-shrink: 0;
+  box-shadow: 0 8px 20px rgba(2, 6, 23, 0.18);
 }
 
 .app-header h1 {
-  font-size: 1.4rem;
+  font-size: 1.45rem;
   font-weight: 700;
   color: var(--slate-50);
+  letter-spacing: -0.02em;
 }
 
 .header-date {
@@ -110,12 +106,8 @@ body {
 
 .header-date label {
   color: var(--slate-300);
-  font-weight: 500;
+  font-weight: 600;
 }
-
-/* ============================================================
-   Layout principal: dos paneles
-   ============================================================ */
 
 .app-main {
   display: flex;
@@ -123,49 +115,47 @@ body {
   overflow: hidden;
 }
 
-/* ============================================================
-   Panel izquierdo - Sidebar colapsable
-   ============================================================ */
-
 .left-panel {
   width: var(--panel-width);
   min-width: var(--panel-collapsed-width);
-  background-color: var(--slate-900);
-  border-right: 1px solid var(--slate-700);
+  background: rgba(15, 23, 42, 0.96);
+  border-right: 1px solid rgba(148, 163, 184, 0.18);
+  box-shadow: 8px 0 24px rgba(2, 6, 23, 0.12);
   overflow: hidden;
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
-  transition: width 0.3s ease;
+  transition: width 0.28s ease, box-shadow 0.28s ease;
   position: relative;
 }
 
 .left-panel.collapsed {
   width: var(--panel-collapsed-width);
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0);
 }
 
 .btn-toggle-panel {
-  background: var(--slate-800);
+  background: linear-gradient(180deg, rgba(30, 41, 59, 0.98), rgba(15, 23, 42, 0.98));
   border: none;
-  border-bottom: 1px solid var(--slate-700);
+  border-bottom: 1px solid rgba(148, 163, 184, 0.18);
   color: var(--slate-300);
   cursor: pointer;
   padding: 8px;
   font-size: 0.9rem;
   text-align: center;
-  transition: background-color 0.2s, color 0.2s;
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
   flex-shrink: 0;
   width: 100%;
 }
 
 .btn-toggle-panel:hover {
-  background-color: var(--slate-700);
+  background: linear-gradient(180deg, rgba(51, 65, 85, 0.98), rgba(30, 41, 59, 0.98));
   color: var(--slate-100);
 }
 
 #toggle-panel-icon {
   display: inline-block;
-  transition: transform 0.3s ease;
+  transition: transform 0.28s ease;
 }
 
 .left-panel.collapsed #toggle-panel-icon {
@@ -180,7 +170,7 @@ body {
   gap: 16px;
   flex: 1;
   opacity: 1;
-  transition: opacity 0.2s ease;
+  transition: opacity 0.2s ease, padding 0.2s ease;
 }
 
 .left-panel.collapsed .panel-content {
@@ -197,48 +187,44 @@ body {
   display: flex;
   flex-direction: column;
   gap: 16px;
-  transition: flex 0.3s ease;
+  transition: flex 0.28s ease;
 }
-
-/* ============================================================
-   Barra superior de tareas (título + botón guardar)
-   ============================================================ */
 
 .tareas-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
+  padding: 4px 0 0;
 }
 
 .tareas-header h2 {
-  font-size: 1.2rem;
+  font-size: 1.28rem;
   color: var(--slate-100);
+  font-weight: 700;
 }
 
-/* ============================================================
-   Secciones del panel izquierdo
-   ============================================================ */
-
 .panel-section {
-  background-color: var(--slate-800);
-  border: 1px solid var(--slate-700);
+  background: linear-gradient(180deg, rgba(30, 41, 59, 0.88), rgba(15, 23, 42, 0.9));
+  border: 1px solid rgba(148, 163, 184, 0.14);
   border-radius: var(--radius);
   padding: 14px;
+  box-shadow: var(--shadow-soft);
 }
 
 .panel-section h2 {
   font-size: 1rem;
   color: var(--slate-100);
   margin-bottom: 10px;
-  padding-bottom: 6px;
-  border-bottom: 1px solid var(--slate-700);
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.14);
+  font-weight: 700;
 }
 
 .input-group {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: 8px;
   margin-bottom: 10px;
 }
 
@@ -251,7 +237,7 @@ body {
 .items-list {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
   max-height: 180px;
   overflow-y: auto;
 }
@@ -260,10 +246,17 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: var(--slate-700);
-  padding: 6px 10px;
-  border-radius: 4px;
+  background: rgba(51, 65, 85, 0.72);
+  border: 1px solid rgba(148, 163, 184, 0.12);
+  padding: 7px 10px;
+  border-radius: 8px;
   font-size: 0.9rem;
+  transition: transform 0.15s ease, border-color 0.15s ease;
+}
+
+.item-row:hover {
+  transform: translateY(-1px);
+  border-color: rgba(96, 165, 250, 0.3);
 }
 
 .item-row .item-name {
@@ -281,46 +274,43 @@ body {
 }
 
 .item-row .btn-delete {
-  background: none;
-  border: none;
+  background: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.2);
   color: var(--red-400);
   cursor: pointer;
   font-size: 1rem;
-  padding: 2px 4px;
-  border-radius: 3px;
-  transition: background-color 0.15s;
+  padding: 3px 8px;
+  border-radius: 6px;
+  transition: background-color 0.15s ease, transform 0.15s ease;
   flex-shrink: 0;
 }
 
 .item-row .btn-delete:hover {
-  background-color: rgba(239, 68, 68, 0.2);
+  background-color: rgba(239, 68, 68, 0.16);
+  transform: scale(1.03);
 }
-
-/* ============================================================
-   Formularios: inputs, selects, textareas
-   ============================================================ */
 
 input[type='text'],
 input[type='date'],
 select,
 textarea {
-  background-color: var(--slate-800);
-  border: 1px solid var(--slate-600);
+  background-color: rgba(15, 23, 42, 0.9);
+  border: 1px solid rgba(148, 163, 184, 0.2);
   color: var(--slate-100);
-  padding: 8px 10px;
+  padding: 9px 10px;
   border-radius: var(--radius);
   font-size: 0.9rem;
   font-family: inherit;
   outline: none;
-  transition: border-color 0.2s, box-shadow 0.2s, transform 0.15s ease, background-color 0.2s ease;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
 }
 
 input[type='text']:focus,
 input[type='date']:focus,
 select:focus,
 textarea:focus {
-  border-color: var(--blue-500);
-  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.25);
+  border-color: rgba(96, 165, 250, 0.9);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
 }
 
 input::placeholder,
@@ -343,11 +333,11 @@ select {
   background-size: 5px 5px, 5px 5px;
   background-repeat: no-repeat;
   padding-right: 32px;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.03);
 }
 
 select:hover {
-  border-color: var(--slate-500);
+  border-color: rgba(148, 163, 184, 0.4);
 }
 
 select option {
@@ -366,64 +356,62 @@ select option[value=''] {
 
 textarea {
   resize: vertical;
-  min-height: 60px;
+  min-height: 64px;
 }
 
-/* ============================================================
-   Botones
-   ============================================================ */
-
 .btn {
-  padding: 8px 14px;
+  padding: 9px 14px;
   border: none;
-  border-radius: var(--radius);
+  border-radius: 9px;
   font-size: 0.85rem;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
-  transition: background-color 0.2s, transform 0.1s;
+  transition: transform 0.12s ease, box-shadow 0.2s ease, background-color 0.2s ease;
   white-space: nowrap;
+  letter-spacing: 0.01em;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
 }
 
 .btn:active {
-  transform: scale(0.97);
+  transform: translateY(0) scale(0.98);
 }
 
 .btn-primary {
-  background-color: var(--blue-600);
+  background: linear-gradient(180deg, var(--blue-600), var(--blue-700));
   color: white;
+  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.28);
 }
 
 .btn-primary:hover {
-  background-color: var(--blue-700);
+  background: linear-gradient(180deg, var(--blue-500), var(--blue-600));
 }
 
 .btn-secondary {
-  background-color: var(--slate-700);
+  background: linear-gradient(180deg, rgba(51, 65, 85, 0.98), rgba(30, 41, 59, 0.98));
   color: var(--slate-200);
-  border: 1px solid var(--slate-600);
+  border: 1px solid rgba(148, 163, 184, 0.18);
 }
 
 .btn-secondary:hover {
-  background-color: var(--slate-600);
+  background: linear-gradient(180deg, rgba(71, 85, 105, 0.98), rgba(51, 65, 85, 0.98));
 }
 
 .btn-danger {
-  background-color: var(--red-600);
+  background: linear-gradient(180deg, var(--red-500), var(--red-600));
   color: white;
 }
 
 .btn-danger:hover {
-  background-color: var(--red-500);
+  background: linear-gradient(180deg, var(--red-400), var(--red-500));
 }
 
 .btn-small {
-  padding: 4px 8px;
+  padding: 5px 10px;
   font-size: 0.8rem;
 }
-
-/* ============================================================
-   Grid de tarjetas de tareas
-   ============================================================ */
 
 .tareas-grid {
   display: grid;
@@ -431,29 +419,30 @@ textarea {
   gap: 16px;
 }
 
-/* --- Tarjeta de tarea individual --- */
 .tarea-card {
-  background-color: var(--slate-900);
-  border: 1px solid var(--slate-700);
+  background: linear-gradient(180deg, rgba(15, 23, 42, 0.96), rgba(15, 23, 42, 0.9));
+  border: 1px solid rgba(148, 163, 184, 0.16);
   border-radius: var(--radius);
   padding: 16px;
   display: flex;
   flex-direction: column;
   gap: 10px;
-  transition: border-color 0.2s, box-shadow 0.2s ease;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+  box-shadow: var(--shadow-card);
 }
 
 .tarea-card:hover {
-  border-color: var(--slate-500);
-  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.25);
+  border-color: rgba(96, 165, 250, 0.28);
+  transform: translateY(-2px);
+  box-shadow: 0 18px 28px rgba(2, 6, 23, 0.3);
 }
 
 .tarea-card-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-bottom: 6px;
-  border-bottom: 1px solid var(--slate-700);
+  padding-bottom: 7px;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.14);
 }
 
 .tarea-card-header h3 {
@@ -462,7 +451,6 @@ textarea {
   font-weight: 700;
 }
 
-/* --- Campos dentro de la tarjeta --- */
 .tarea-field {
   display: flex;
   flex-direction: column;
@@ -470,11 +458,11 @@ textarea {
 }
 
 .tarea-field label {
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   color: var(--slate-400);
-  font-weight: 500;
+  font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.06em;
 }
 
 .tarea-field input,
@@ -483,7 +471,6 @@ textarea {
   width: 100%;
 }
 
-/* --- Contenedor de vehículos --- */
 .vehiculos-group {
   display: flex;
   flex-direction: column;
@@ -491,24 +478,23 @@ textarea {
 }
 
 .vehiculos-group label {
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   color: var(--slate-400);
-  font-weight: 500;
+  font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.06em;
 }
 
 .vehiculos-selects {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
 }
 
 .vehiculos-selects select {
   width: 100%;
 }
 
-/* --- Contenedor de trabajadores --- */
 .trabajadores-section {
   display: flex;
   flex-direction: column;
@@ -516,11 +502,11 @@ textarea {
 }
 
 .trabajadores-section > label {
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   color: var(--slate-400);
-  font-weight: 500;
+  font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.06em;
 }
 
 .trabajadores-add {
@@ -535,27 +521,28 @@ textarea {
 .trabajadores-chips {
   display: flex;
   flex-wrap: wrap;
-  gap: 4px;
+  gap: 5px;
   min-height: 28px;
 }
 
-/* --- Chips de trabajadores asignados --- */
 .chip {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
-  background-color: var(--blue-600);
+  gap: 5px;
+  background: linear-gradient(180deg, #3b82f6, #2563eb);
   color: white;
-  padding: 3px 8px;
-  border-radius: 14px;
+  padding: 4px 8px 4px 9px;
+  border-radius: 999px;
   font-size: 0.8rem;
-  font-weight: 500;
+  font-weight: 600;
+  border: 1px solid rgba(255,255,255,0.1);
+  box-shadow: 0 5px 12px rgba(37, 99, 235, 0.2);
 }
 
 .chip .chip-remove {
-  background: none;
+  background: transparent;
   border: none;
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(255, 255, 255, 0.75);
   cursor: pointer;
   font-size: 0.9rem;
   padding: 0 2px;
@@ -566,24 +553,20 @@ textarea {
   color: white;
 }
 
-/* ============================================================
-   Notificación flotante
-   ============================================================ */
-
 .notificacion {
   position: fixed;
   bottom: 24px;
   right: 24px;
-  background-color: var(--slate-800);
-  border: 1px solid var(--slate-600);
+  background: rgba(15, 23, 42, 0.96);
+  border: 1px solid rgba(148, 163, 184, 0.18);
   color: var(--slate-100);
   padding: 14px 22px;
-  border-radius: var(--radius);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  border-radius: 12px;
+  box-shadow: 0 18px 40px rgba(2, 6, 23, 0.38);
   z-index: 1000;
   font-size: 0.95rem;
-  transition: opacity 0.3s, transform 0.3s;
-  max-width: 400px;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  max-width: 420px;
   display: flex;
   align-items: center;
   gap: 12px;
@@ -591,73 +574,68 @@ textarea {
 
 .notificacion.oculto {
   opacity: 0;
-  transform: translateY(20px);
+  transform: translateY(18px);
   pointer-events: none;
 }
 
 .notificacion.exito {
-  border-color: var(--green-500);
+  border-color: rgba(34, 197, 94, 0.8);
   border-left: 4px solid var(--green-500);
 }
 
 .notificacion.error {
-  border-color: var(--red-500);
+  border-color: rgba(239, 68, 68, 0.8);
   border-left: 4px solid var(--red-500);
 }
 
 .notificacion.info {
-  border-color: var(--blue-500);
+  border-color: rgba(59, 130, 246, 0.8);
   border-left: 4px solid var(--blue-500);
 }
 
-/* --- Botón deshacer en notificación --- */
 .btn-deshacer {
-  background-color: var(--amber-500);
+  background: linear-gradient(180deg, var(--amber-400), var(--amber-500));
   color: var(--slate-950);
   padding: 5px 12px;
   font-size: 0.82rem;
-  font-weight: 700;
-  border-radius: 6px;
+  font-weight: 800;
+  border-radius: 8px;
   flex-shrink: 0;
 }
 
 .btn-deshacer:hover {
-  background-color: var(--amber-400);
+  background: linear-gradient(180deg, var(--amber-300), var(--amber-400));
 }
 
 .btn-deshacer.oculto {
   display: none;
 }
 
-/* ============================================================
-   Secciones de ausencias
-   ============================================================ */
-
 .ausencias-container {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 12px;
-  margin-top: 8px;
-  padding-top: 16px;
-  border-top: 1px solid var(--slate-700);
+  margin-top: 6px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(148, 163, 184, 0.14);
 }
 
 .ausencia-section {
-  background-color: var(--slate-900);
-  border: 1px solid var(--slate-700);
+  background: linear-gradient(180deg, rgba(15, 23, 42, 0.94), rgba(15, 23, 42, 0.82));
+  border: 1px solid rgba(148, 163, 184, 0.15);
   border-radius: var(--radius);
   padding: 12px;
+  box-shadow: var(--shadow-soft);
 }
 
 .ausencia-section h3 {
   font-size: 0.95rem;
   color: var(--slate-100);
   margin-bottom: 8px;
-  padding-bottom: 4px;
-  border-bottom: 1px solid var(--slate-700);
+  padding-bottom: 5px;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.14);
 }
 
-/* Colores distintivos por tipo */
 .ausencia-section[data-tipo='baja'] {
   border-left: 3px solid var(--red-500);
 }
@@ -683,27 +661,22 @@ textarea {
 .ausencia-chips {
   display: flex;
   flex-wrap: wrap;
-  gap: 4px;
+  gap: 5px;
   min-height: 24px;
 }
 
-/* Chips de ausencia con colores por tipo */
 .chip-baja {
-  background-color: var(--red-600) !important;
+  background: linear-gradient(180deg, var(--red-500), var(--red-600)) !important;
 }
 
 .chip-vacaciones {
-  background-color: var(--amber-500) !important;
+  background: linear-gradient(180deg, var(--amber-400), var(--amber-500)) !important;
   color: var(--slate-950) !important;
 }
 
 .chip-descanso {
-  background-color: var(--blue-600) !important;
+  background: linear-gradient(180deg, var(--blue-500), var(--blue-600)) !important;
 }
-
-/* ============================================================
-   Responsive: pantallas grandes
-   ============================================================ */
 
 @media (min-width: 1200px) {
   .tareas-grid {
@@ -717,19 +690,11 @@ textarea {
   }
 }
 
-/* ============================================================
-   Responsive: pantallas medianas
-   ============================================================ */
-
 @media (max-width: 1100px) {
   .tareas-grid {
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   }
 }
-
-/* ============================================================
-   Responsive: pantallas pequeñas (900px mínimo)
-   ============================================================ */
 
 @media (max-width: 950px) {
   .app-main {
@@ -739,14 +704,14 @@ textarea {
   .left-panel {
     width: 100% !important;
     min-width: unset;
-    max-height: 300px;
+    max-height: 310px;
     border-right: none;
-    border-bottom: 1px solid var(--slate-700);
+    border-bottom: 1px solid rgba(148, 163, 184, 0.18);
   }
 
   .left-panel.collapsed {
     width: 100% !important;
-    max-height: 36px;
+    max-height: 38px;
   }
 
   .panel-section {
@@ -770,10 +735,6 @@ textarea {
     flex-wrap: wrap;
   }
 }
-
-/* ============================================================
-   Estado vacío
-   ============================================================ */
 
 .empty-state {
   color: var(--slate-500);
