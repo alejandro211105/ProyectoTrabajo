@@ -312,7 +312,7 @@ textarea {
   font-size: 0.9rem;
   font-family: inherit;
   outline: none;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.15s ease, background-color 0.2s ease;
 }
 
 input[type='text']:focus,
@@ -332,11 +332,22 @@ select {
   cursor: pointer;
   color: var(--slate-100);
   appearance: none;
-  background-image: linear-gradient(45deg, transparent 50%, var(--slate-300) 50%), linear-gradient(135deg, var(--slate-300) 50%, transparent 50%);
-  background-position: calc(100% - 16px) calc(50% - 2px), calc(100% - 11px) calc(50% - 2px);
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--slate-300) 50%),
+    linear-gradient(135deg, var(--slate-300) 50%, transparent 50%);
+  background-position:
+    calc(100% - 16px) calc(50% - 2px),
+    calc(100% - 11px) calc(50% - 2px);
   background-size: 5px 5px, 5px 5px;
   background-repeat: no-repeat;
   padding-right: 32px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+}
+
+select:hover {
+  border-color: var(--slate-500);
 }
 
 select option {
@@ -344,14 +355,12 @@ select option {
   color: var(--slate-100);
 }
 
-select:invalid,
-select[disabled],
-select option:disabled {
+select option[value=''] {
   color: var(--slate-500);
 }
 
-select.placeholder,
-select.empty-option {
+select:invalid,
+select option[value=''] {
   color: var(--slate-500);
 }
 
@@ -422,6 +431,7 @@ textarea {
   gap: 16px;
 }
 
+/* --- Tarjeta de tarea individual --- */
 .tarea-card {
   background-color: var(--slate-900);
   border: 1px solid var(--slate-700);
@@ -430,11 +440,12 @@ textarea {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  transition: border-color 0.2s;
+  transition: border-color 0.2s, box-shadow 0.2s ease;
 }
 
 .tarea-card:hover {
   border-color: var(--slate-500);
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.25);
 }
 
 .tarea-card-header {
@@ -451,6 +462,7 @@ textarea {
   font-weight: 700;
 }
 
+/* --- Campos dentro de la tarjeta --- */
 .tarea-field {
   display: flex;
   flex-direction: column;
@@ -471,6 +483,7 @@ textarea {
   width: 100%;
 }
 
+/* --- Contenedor de vehículos --- */
 .vehiculos-group {
   display: flex;
   flex-direction: column;
@@ -495,6 +508,7 @@ textarea {
   width: 100%;
 }
 
+/* --- Contenedor de trabajadores --- */
 .trabajadores-section {
   display: flex;
   flex-direction: column;
@@ -525,6 +539,7 @@ textarea {
   min-height: 28px;
 }
 
+/* --- Chips de trabajadores asignados --- */
 .chip {
   display: inline-flex;
   align-items: center;
@@ -550,6 +565,10 @@ textarea {
 .chip .chip-remove:hover {
   color: white;
 }
+
+/* ============================================================
+   Notificación flotante
+   ============================================================ */
 
 .notificacion {
   position: fixed;
@@ -591,6 +610,7 @@ textarea {
   border-left: 4px solid var(--blue-500);
 }
 
+/* --- Botón deshacer en notificación --- */
 .btn-deshacer {
   background-color: var(--amber-500);
   color: var(--slate-950);
@@ -608,6 +628,10 @@ textarea {
 .btn-deshacer.oculto {
   display: none;
 }
+
+/* ============================================================
+   Secciones de ausencias
+   ============================================================ */
 
 .ausencias-container {
   display: grid;
@@ -633,15 +657,16 @@ textarea {
   border-bottom: 1px solid var(--slate-700);
 }
 
-.ausencia-section[data-tipo="baja"] {
+/* Colores distintivos por tipo */
+.ausencia-section[data-tipo='baja'] {
   border-left: 3px solid var(--red-500);
 }
 
-.ausencia-section[data-tipo="vacaciones"] {
+.ausencia-section[data-tipo='vacaciones'] {
   border-left: 3px solid var(--amber-500);
 }
 
-.ausencia-section[data-tipo="descanso"] {
+.ausencia-section[data-tipo='descanso'] {
   border-left: 3px solid var(--blue-500);
 }
 
@@ -662,6 +687,7 @@ textarea {
   min-height: 24px;
 }
 
+/* Chips de ausencia con colores por tipo */
 .chip-baja {
   background-color: var(--red-600) !important;
 }
@@ -691,11 +717,19 @@ textarea {
   }
 }
 
+/* ============================================================
+   Responsive: pantallas medianas
+   ============================================================ */
+
 @media (max-width: 1100px) {
   .tareas-grid {
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   }
 }
+
+/* ============================================================
+   Responsive: pantallas pequeñas (900px mínimo)
+   ============================================================ */
 
 @media (max-width: 950px) {
   .app-main {
@@ -736,6 +770,10 @@ textarea {
     flex-wrap: wrap;
   }
 }
+
+/* ============================================================
+   Estado vacío
+   ============================================================ */
 
 .empty-state {
   color: var(--slate-500);
